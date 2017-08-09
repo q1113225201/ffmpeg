@@ -25,5 +25,11 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(context, FFmpegBaseActivity.class));
             }
         });
+        findViewById(R.id.btnDecode).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context, DecodeActivity.class));
+            }
+        });
     }
 }
