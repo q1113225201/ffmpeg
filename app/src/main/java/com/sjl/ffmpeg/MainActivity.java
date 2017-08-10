@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
         findViewById(R.id.btnDecode).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(context, DecodeActivity.class));
+                startActivity(new Intent(context, TransformActivity.class));
             }
         });
     }

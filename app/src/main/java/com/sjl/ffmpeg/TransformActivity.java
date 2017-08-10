@@ -16,7 +16,7 @@ import com.sjl.ffmpeg.util.ffmpeg.FFmpegUtil;
 
 import java.io.IOException;
 
-public class DecodeActivity extends Activity {
+public class TransformActivity extends Activity {
     private Context context;
     private EditText etOutput;
     private TextView tvState;
@@ -24,7 +24,7 @@ public class DecodeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_decode);
+        setContentView(R.layout.activity_transform);
 
         initView();
     }
@@ -33,29 +33,43 @@ public class DecodeActivity extends Activity {
         context = this;
         etOutput = findViewById(R.id.etOutput);
         tvState = findViewById(R.id.tvState);
+        findViewById(R.id.btnVideoInfo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getVideoInfo(PathConfig.ORIGN_MP4);
+            }
+        });
         findViewById(R.id.btnTransform).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PermisstionUtil.requestPermissions(context, new PermisstionUtil.OnPermissionResult() {
-                    @Override
-                    public void granted(int requestCode) {
-                        if (!FileUtil.isFileExist(PathConfig.ORIGN_MP4)) {
-                            try {
-                                FileUtil.copyAssetsFile(context, "orign.mp4", PathConfig.ORIGN_MP4);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        transform(PathConfig.ORIGN_MP4, PathConfig.BASE_PATH + etOutput.getText().toString());
-                    }
-
-                    @Override
-                    public void denied(int requestCode) {
-                        ToastUtil.showToast(context, "读写权限被禁止");
-                    }
-                }, "正在请求文件读写权限", 100, PermisstionUtil.STORAGE);
+                transform(PathConfig.ORIGN_MP4, PathConfig.BASE_PATH + etOutput.getText().toString());
             }
         });
+        PermisstionUtil.requestPermissions(context, new PermisstionUtil.OnPermissionResult() {
+            @Override
+            public void granted(int requestCode) {
+                if (!FileUtil.isFileExist(PathConfig.ORIGN_MP4)) {
+                    try {
+                        FileUtil.copyAssetsFile(context, "orign.mp4", PathConfig.ORIGN_MP4);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void denied(int requestCode) {
+                ToastUtil.showToast(context, "读写权限被禁止");
+            }
+        }, "正在请求文件读写权限", 100, PermisstionUtil.STORAGE);
+    }
+
+    /**
+     * 获取视频信息
+     * @param filename
+     */
+    private void getVideoInfo(String filename) {
+        tvState.setText(FFmpegUtil.getVideoInfo(filename));
     }
 
     /**
@@ -65,7 +79,7 @@ public class DecodeActivity extends Activity {
      */
     private void transform(String orign, String dest) {
         FileUtil.deleteFile(dest);
-        tvState.setText("result="+FFmpegUtil.decode(orign,dest));
+        tvState.setText(String.format("%s to %s result=%s",orign,dest,FFmpegUtil.transform(orign,dest)));
     }
 
     @Override

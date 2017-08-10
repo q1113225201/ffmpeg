@@ -4,26 +4,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.sjl.ffmpeg.DecodeActivity">
+    tools:context="com.sjl.ffmpeg.TransformActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="orign.mp4" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="视频信息"
+        android:id="@+id/btnVideoInfo"/>
+
     <EditText
         android:id="@+id/etOutput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="transform.mp4" />
+        android:text="transform.mkv" />
 
     <Button
         android:id="@+id/btnTransform"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="转换" />
+
     <TextView
+        android:id="@+id/tvState"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvState"/>
+        android:layout_height="wrap_content" />
 </LinearLayout>

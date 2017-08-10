@@ -2,7 +2,6 @@
 #include <string>
 #include "util/log_print.h"
 
-
 extern "C" {
 #include <libavformat/avformat.h>
 #include <libavfilter/avfilter.h>
@@ -108,8 +107,41 @@ Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_avfilterinfo(JNIEnv *env, jclass type
     return env->NewStringUTF(info);
 }
 
+JNIEXPORT jstring JNICALL
+Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_getVideoInfo(JNIEnv *env, jclass type,
+                                                        jstring filename_) {
+    const char *filename = env->GetStringUTFChars(filename_, 0);
+
+    av_register_all();
+    AVFormatContext *avFormatContext = avformat_alloc_context();
+    //Input
+    //打开媒体文件
+    if (avformat_open_input(&avFormatContext, filename, 0, 0) < 0) {
+        LOGE("无法打开输入文件");
+        return 0;
+    }
+    //获取视频信息
+    if (avformat_find_stream_info(avFormatContext, 0) < 0) {
+        LOGE("无法检索输入流信息");
+        return 0;
+    }
+    int videoIndex = -1;
+    for (int i = 0; i < avFormatContext->nb_streams; ++i) {
+        if(avFormatContext->streams[i]->codec->codec_type==AVMEDIA_TYPE_VIDEO){
+            videoIndex = i;
+            break;
+        }
+    }
+    AVStream *avStream = avFormatContext->streams[videoIndex];
+    LOGI("duration=%d",avStream->info->codec_info_duration);
+
+    env->ReleaseStringUTFChars(filename_, filename);
+
+    return env->NewStringUTF("");
+}
+
 JNIEXPORT jint JNICALL
-Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_decode(JNIEnv *env, jclass type, jstring input_,
+Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_transform(JNIEnv *env, jclass type, jstring input_,
                                                   jstring output_) {
     const char *input = env->GetStringUTFChars(input_, 0);
     const char *output = env->GetStringUTFChars(output_, 0);
@@ -138,7 +170,7 @@ Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_decode(JNIEnv *env, jclass type, jstr
         return 0;
     }
     outputFormat = oformatContext->oformat;
-    for (int i = 0; i < iformatContext->nb_streams; ++i) {
+    for (int i = 0; i < iformatContext->nb_streams; i++) {
         AVStream *inStream = iformatContext->streams[i];
         AVStream *outStream = avformat_new_stream(oformatContext, inStream->codec->codec);
         if (!outStream) {
@@ -165,12 +197,17 @@ Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_decode(JNIEnv *env, jclass type, jstr
             return 0;
         }
     }
+    //写文件头
+    if(avformat_write_header(oformatContext,NULL)<0){
+        LOGE("打开输出文件错误");
+        return 0;
+    }
     int frameIndex = 0;
     while (1) {
         AVStream *inStream;
         AVStream *outStream;
         AVPacket pkt;
-        if (av_read_frame(iformatContext, &pkt)) {
+        if (av_read_frame(iformatContext, &pkt)<0) {
             break;
         }
         inStream = iformatContext->streams[pkt.stream_index];
@@ -185,16 +222,18 @@ Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_decode(JNIEnv *env, jclass type, jstr
         //将AVPacket（存储视频压缩码流数据）写入文件
         if (av_interleaved_write_frame(oformatContext, &pkt) < 0) {
             LOGE("合并AVPacket错误");
-            return 0;
+            break;
         }
         LOGI("写入第%d帧", frameIndex);
-        av_packet_unref(&pkt);
+        av_free_packet(&pkt);
         frameIndex++;
     }
+    //写文件尾
+    av_write_trailer(oformatContext);
 
     avformat_close_input(&iformatContext);
     //关闭输出流
-    if (oformatContext && !outputFormat->flags & AVFMT_NOFILE) {
+    if (oformatContext && !(outputFormat->flags & AVFMT_NOFILE)) {
         avio_close(oformatContext->pb);
     }
     avformat_free_context(oformatContext);

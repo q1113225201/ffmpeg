@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".FFmpegBaseActivity" />
-        <activity android:name=".DecodeActivity"></activity>
+        <activity android:name=".TransformActivity"></activity>
     </application>
 
 </manifest>

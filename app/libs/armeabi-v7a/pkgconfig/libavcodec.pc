@@ -1,4 +1,4 @@
-prefix=E:/output/arm
+prefix=E:/output
 exec_prefix=${prefix}
 libdir=${prefix}/lib
 includedir=${prefix}/include
