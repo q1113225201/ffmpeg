@@ -2,7 +2,12 @@
 cmake_minimum_required(VERSION 3.4.1)
 add_library( native-lib
              SHARED
-             src/main/cpp/native-lib.cpp )
+             src/main/cpp/native-lib.cpp
+             src/main/cpp/cmdutils.c
+             src/main/cpp/ffmpeg.c
+             src/main/cpp/ffmpeg_filter.c
+             src/main/cpp/ffmpeg_opt.c
+             )
 find_library( log-lib
               log )
 target_link_libraries( native-lib
@@ -19,7 +24,6 @@ set_target_properties( #库名称
                        PROPERTIES IMPORTED_LOCATION
                        #库的路径
                        ../../../../libs/armeabi-v7a/libffmpeg.so )
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 #外面引入的库文件需要头文件
 include_directories(libs/include)
 set(distribution_DIR ${CMAKE_SOURCE_DIR}/../../../../libs)

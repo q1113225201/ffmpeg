@@ -17,4 +17,6 @@ public class FFmpegUtil {
     public static native String avformatinfo();
     public static native String avcodecinfo();
     public static native String avfilterinfo();
+
+    public static native int runCmd(String cmd);
 }

@@ -19,7 +19,6 @@ set_target_properties( #库名称
                        PROPERTIES IMPORTED_LOCATION
                        #库的路径
                        ../../../../libs/armeabi-v7a/libffmpeg.so )
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 #外面引入的库文件需要头文件
 include_directories(libs/include)
 set(distribution_DIR ${CMAKE_SOURCE_DIR}/../../../../libs)

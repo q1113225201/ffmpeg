@@ -15,6 +15,11 @@
             android:layout_height="wrap_content"
             android:text="基础信息"
             android:id="@+id/btnBaseInfo"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="脚本执行"
+            android:id="@+id/btnCmd"/>
 
     </LinearLayout>
 </ScrollView>

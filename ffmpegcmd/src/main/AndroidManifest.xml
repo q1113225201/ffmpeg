@@ -13,7 +13,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FFmpegBaseActivity"></activity>
+        <activity android:name=".FFmpegBaseActivity" />
+        <activity android:name=".FFmpegCmdActivity"></activity>
     </application>
 
 </manifest>
