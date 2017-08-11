@@ -7,12 +7,17 @@ find_library( log-lib
               log )
 target_link_libraries( native-lib
                        ${log-lib} )
-
-add_library( ffmpeg-lib
+#添加ffmpeg已编译好的so库依赖
+add_library( #库名称
+             ffmpeg-lib
+             #SHARED表示是共享库，一般.so文件，还有STATIC，一般.a文件
              SHARED
+             #IMPORTED表示引用的不是生成的
              IMPORTED )
-set_target_properties( ffmpeg-lib
+set_target_properties( #库名称
+                       ffmpeg-lib
                        PROPERTIES IMPORTED_LOCATION
+                       #库的路径
                        ../../../../libs/armeabi-v7a/libffmpeg.so )
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 #外面引入的库文件需要头文件

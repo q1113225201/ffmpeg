@@ -9,7 +9,6 @@ package com.sjl.ffmpegonelib.util;
 
 public class FFmpegUtil {
     static {
-        System.loadLibrary("ffmpeg");
         System.loadLibrary("native-lib");
     }
     //读取基本信息
