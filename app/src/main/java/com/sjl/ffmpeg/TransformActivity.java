@@ -8,11 +8,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.sjl.ffmpeg.config.PathConfig;
-import com.sjl.ffmpeg.util.FileUtil;
-import com.sjl.ffmpeg.util.PermisstionUtil;
-import com.sjl.ffmpeg.util.ToastUtil;
-import com.sjl.ffmpeg.util.ffmpeg.FFmpegUtil;
+import com.sjl.baselib.config.PathConfig;
+import com.sjl.baselib.util.FileUtil;
+import com.sjl.baselib.util.PermisstionUtil;
+import com.sjl.baselib.util.ToastUtil;
+import com.sjl.ffmpeg.util.FFmpegUtil;
 
 import java.io.IOException;
 

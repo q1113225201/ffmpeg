@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sjl.ffmpeg.util.ffmpeg.FFmpegUtil;
+import com.sjl.ffmpeg.util.FFmpegUtil;
 
 public class FFmpegBaseActivity extends Activity {
     private TextView tv;

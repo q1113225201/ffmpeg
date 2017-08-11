@@ -7,14 +7,14 @@ extern "C" {
 #include <libavfilter/avfilter.h>
 
 JNIEXPORT jstring JNICALL
-Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_configuration(JNIEnv *env, jclass type) {
+Java_com_sjl_ffmpeg_util_FFmpegUtil_configuration(JNIEnv *env, jclass type) {
     char info[10000] = {0};
     sprintf(info, "%s\n", avcodec_configuration());
     return env->NewStringUTF(info);
 }
 
 JNIEXPORT jstring JNICALL
-Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_urlprotocolinfo(JNIEnv *env, jclass type) {
+Java_com_sjl_ffmpeg_util_FFmpegUtil_urlprotocolinfo(JNIEnv *env, jclass type) {
     char info[40000] = {0};
     av_register_all();
 
@@ -37,7 +37,7 @@ Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_urlprotocolinfo(JNIEnv *env, jclass t
 }
 
 JNIEXPORT jstring JNICALL
-Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_avformatinfo(JNIEnv *env, jclass type) {
+Java_com_sjl_ffmpeg_util_FFmpegUtil_avformatinfo(JNIEnv *env, jclass type) {
     char info[40000] = {0};
 
     av_register_all();
@@ -59,7 +59,7 @@ Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_avformatinfo(JNIEnv *env, jclass type
 }
 
 JNIEXPORT jstring JNICALL
-Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_avcodecinfo(JNIEnv *env, jclass type) {
+Java_com_sjl_ffmpeg_util_FFmpegUtil_avcodecinfo(JNIEnv *env, jclass type) {
     char info[40000] = {0};
 
     av_register_all();
@@ -94,7 +94,7 @@ Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_avcodecinfo(JNIEnv *env, jclass type)
 }
 
 JNIEXPORT jstring JNICALL
-Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_avfilterinfo(JNIEnv *env, jclass type) {
+Java_com_sjl_ffmpeg_util_FFmpegUtil_avfilterinfo(JNIEnv *env, jclass type) {
     char info[40000] = {0};
     avfilter_register_all();
     AVFilter *f_temp = (AVFilter *) avfilter_next(NULL);
@@ -108,7 +108,7 @@ Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_avfilterinfo(JNIEnv *env, jclass type
 }
 
 JNIEXPORT jstring JNICALL
-Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_getVideoInfo(JNIEnv *env, jclass type,
+Java_com_sjl_ffmpeg_util_FFmpegUtil_getVideoInfo(JNIEnv *env, jclass type,
                                                         jstring filename_) {
     const char *filename = env->GetStringUTFChars(filename_, 0);
 
@@ -141,7 +141,7 @@ Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_getVideoInfo(JNIEnv *env, jclass type
 }
 
 JNIEXPORT jint JNICALL
-Java_com_sjl_ffmpeg_util_ffmpeg_FFmpegUtil_transform(JNIEnv *env, jclass type, jstring input_,
+Java_com_sjl_ffmpeg_util_FFmpegUtil_transform(JNIEnv *env, jclass type, jstring input_,
                                                   jstring output_) {
     const char *input = env->GetStringUTFChars(input_, 0);
     const char *output = env->GetStringUTFChars(output_, 0);
