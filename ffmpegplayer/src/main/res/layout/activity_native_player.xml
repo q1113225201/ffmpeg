@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sjl.ffmpegplayer.NativePlayerActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button
+            android:id="@+id/btnSet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="设置视频路径" />
+
+        <Button
+            android:id="@+id/btnStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="播放" />
+
+        <Button
+            android:id="@+id/btnPause"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="暂停" />
+
+        <Button
+            android:id="@+id/btnStop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="停止" />
+
+    </LinearLayout>
+</ScrollView>

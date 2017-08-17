@@ -123,7 +123,7 @@ Java_com_sjl_ffmpegdecoder_util_FFmpegUtil_decoder(JNIEnv *env, jclass type, job
             break;
         }
         if (getPicture != 0) {
-            LOGI("合法的解码错误");
+            LOGI("异常错误");
             break;
         }
         sws_scale(swsContext, (const uint8_t *const *) frame->data, frame->linesize, 0,

@@ -1,1 +1,1 @@
-include ':app', ':ffmpegcmd', ':ffmpegonelib', ':baselib', ':ffmpegdecoder'
+include ':app', ':ffmpegcmd', ':ffmpegonelib', ':baselib', ':ffmpegdecoder', ':ffmpegplayer'
